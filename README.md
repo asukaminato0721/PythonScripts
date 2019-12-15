@@ -1,1 +1,3 @@
-# Mathematica_semi-automatic_driver
+# 一些自动的辅助工具
+
+用于练手，不保证内置的网址是否失效
