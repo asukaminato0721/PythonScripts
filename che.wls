@@ -4,7 +4,7 @@ While[True,
     text = StringTrim@InputString@"Input name: ";
     If[StringMatchQ[text, "*-*"],
     {data = text <> " site:https://www.sdfasf.space";
-      name="p42u";
+      name="n43a";
       weblist =
       { "https://www.google.com/search?q=" <> data,
         "http://www."<>name<>".com/cn/vl_searchbyid.php?keyword=" <> text,
@@ -19,6 +19,5 @@ While[True,
     }
   ]
 ]
-
 
 (*感谢 flaribbit 的热情帮助*)
