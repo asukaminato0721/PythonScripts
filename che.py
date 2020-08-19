@@ -1,8 +1,9 @@
 import os
-import re
-while(True):
-    车牌 = input("输入车牌: ")
-    if(re.match(车牌, r'-')):
+while True:
+    车牌 = input("输入车牌: ").strip()
+    if "-" in 车牌:
         url = "https://www.google.com/search?q=" + 车牌
-        os.system(
-            '"C:/Program Files (x86)/Google/Chrome/Application/chrome.exe" '+url)
+        os.popen(
+            'chrome.exe --incognito'
+            + url
+        )
