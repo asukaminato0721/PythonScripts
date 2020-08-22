@@ -7,5 +7,4 @@ proxies = {
     "HTTP": "http://127.0.0.1:10809",
     "SOCKS5": "http://127.0.0.1:10808",
 }
-# 直接输出到剪贴板
-copy(get(web, proxies=proxies).text)
+copy("\n".join(get(i, proxies=proxies).text for i in web))
