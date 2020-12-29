@@ -1,10 +1,23 @@
-from clipboard import copy
-from requests import get
+import asyncio
 
-web = "https://raw.githubusercontent.com/ngosang/trackerslist/master/trackers_all.txt"
-# 这里填代理端口
-proxies = {
-    "HTTP": "http://127.0.0.1:10809",
-    "SOCKS5": "http://127.0.0.1:10808",
-}
-copy("\n".join(get(i, proxies=proxies).text for i in web))
+import httpx
+from clipboard import copy
+
+
+async def main():
+    proxies = "http://127.0.0.1:7890"
+    tracker_list = [
+        "https://trackerslist.com/all.txt",
+        "https://raw.githubusercontent.com/ngosang/trackerslist/master/trackers_all.txt",
+    ]
+
+    async def get_trackers(url: str):
+        async with httpx.AsyncClient(proxies=proxies) as client:
+            request = await client.get(url)
+            return request.text.split("\n")
+
+    get = await asyncio.gather(*map(get_trackers, tracker_list))
+    copy("\n".join({x for sub in get for x in sub if x}))
+
+
+asyncio.run(main())

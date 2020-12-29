@@ -1,17 +1,28 @@
-import urllib.request
-from bs4 import BeautifulSoup
-headers = {
-    'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:23.0) Gecko/20100101 Firefox/23.0'}
-url = 'http://www.r40z.com/cn/'
-req = urllib.request.Request(url=url, headers=headers)
-data = urllib.request.urlopen(req).read()
-# 前面是爬取网页内容
-soup = BeautifulSoup(data, 'lxml')  # 传入解析器
-网页内容 = soup.get_text()
-start = 网页内容.find("热门影片")
-end = 网页内容.find("了解更多")
-正文 = 网页内容[start + 7:end]
+"""
+@date: 2020年12月29日
+@version: 1.0
+@license: MIT
 
-写入文件 = open("D:/test.txt", "w")
-写入文件.write(正文)
-写入文件.close()
+@usage: open http://zlibz.com/ , change WEBNAME to what you see
+"""
+
+import httpx
+from fake_useragent import UserAgent
+from lxml.etree import HTML
+
+WEBNAME = "b49t"
+URL = f"http://www.{WEBNAME}.com/cn/"
+HIGH_MARK = "vl_bestrated.php?list&mode=&page=1"
+UA = UserAgent()
+headers = {"User-Agent": UA.random}
+with httpx.Client() as client:
+    response = client.get(f"{URL}{HIGH_MARK}", headers=headers)
+    data = HTML(response.text, parser=None)
+    print(
+        *[
+            x.text
+            for x in data.xpath('//tr[@class="dimrow"]//a[@title]')
+            if x.text is not None
+        ],
+        sep="\n",
+    )

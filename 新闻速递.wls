@@ -1,4 +1,3 @@
-#!/usr/bin/env wolframscript
 Print["processing data\n"];
 today = {};
 webname=Last@Import["http://zlibz.com/", "Images"] //RemoveAlphaChannel // TextRecognize;
@@ -13,7 +12,7 @@ func[web_, name_] := Block[{data, data1},
   data = Import[web];
   data1 = Snippet[data, 23 ;; 104];
   today~AppendTo~("\n---------------------------------------\n" <> name <> "\n");
-  AppendTo[today, ToString@*Grid@Partition[StringSplit[data1, "\n"] /. Alternatives[" ", ""] -> Nothing, 2]
+  AppendTo[today, ToString@*Grid@Partition[StringSplit[data1, "\n"] /. (" " | "") -> Nothing, 2]
   ];
   ]
 func["http://www."<>webname<>".com/cn/vl_mostwanted.php", "mostwanted of last month"];
