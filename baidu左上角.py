@@ -5,7 +5,7 @@ from lxml import etree
 def main():
     with httpx.Client() as client:
         response = client.get("https://baidu.com/")
-        html = etree.HTML(response.text)
+        html = etree.HTML(response.text, parser=None)
 
         for x in range(1, 10):
             if k := [
